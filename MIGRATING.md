@@ -25,7 +25,20 @@ Integration tests:
   let (contract_addr, _gas_used) = deps.api.human_address(&init_env.contract.address).unwrap();
   ```
 
-* All usages of `mock_env` will have to remove the first argument (no need of API).
+All Tests:
+
+All usages of `mock_env` will have to remove the first argument (no need of API).
+
+```rust
+// before
+let env = mock_env(&deps.api, "creator", &coins(1000, "earth"));
+
+// after
+let env = mock_env("creator", &coins(1000, "earth"));
+```
+
+Contracts:
+
 * All code that uses `message.sender` or `contract.address` should deal with
   `HumanAddr` not `CanonicalAddr`. Many times this means you can remove
   a conversion step.
