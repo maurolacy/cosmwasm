@@ -25,6 +25,11 @@ Integration tests:
   let (contract_addr, _gas_used) = deps.api.human_address(&init_env.contract.address).unwrap();
   ```
 
+* All usages of `mock_env` will have to remove the first argument (no need of API).
+* All code that uses `message.sender` or `contract.address` should deal with
+  `HumanAddr` not `CanonicalAddr`. Many times this means you can remove
+  a conversion step.
+
 ## 0.8 -> 0.9
 
 `dependencies`/`dev-dependencies` in `Cargo.toml`:
