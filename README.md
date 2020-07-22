@@ -322,7 +322,7 @@ cargo fmt \
 Step 1 (fast checks)
 
 ```sh
-for contract_dir in contracts/*/; do (cd "$contract_dir" && cargo fmt && cargo check --tests && cargo wasm-debug && cargo unit-test && cargo clippy -- -D warnings && cargo schema) || break; done
+for contract_dir in contracts/*/; do (cd "$contract_dir" && cargo fmt && cargo wasm && cargo check --tests && cargo unit-test && cargo clippy -- -D warnings && cargo schema) || break; done
 ```
 
 Step 2 (slower checks)
