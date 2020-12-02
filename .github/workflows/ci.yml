@@ -36,8 +36,10 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
+            ~/.cargo/registry
+            ~/.cargo/git
             ./contracts/hackatom/target
-          key: ${{ matrix.os }}-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
+          key: ${{ matrix.os }}-nightly-${{ hashFiles('**/Cargo.lock') }}
       - name: Build / Test hackatom wasm
         run: |
           cargo wasm --locked
