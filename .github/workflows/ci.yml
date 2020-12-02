@@ -39,7 +39,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             '**/target'
-          key: ${{ matrix.os }}-nightly-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.os }}-xx-${{ hashFiles('**/Cargo.lock') }}
       - name: Build / Test hackatom wasm
         run: |
           cargo wasm --locked
