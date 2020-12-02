@@ -38,7 +38,7 @@ jobs:
           path: |
             ./contracts/hackatom/target
           key: ${{ matrix.os }}-cargo-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
-      - name: Build hackatom wasm
-        run: cargo wasm --locked
-      - name: Integration Test hackatom
-        run: cargo integration-test --no-default-features --features singlepass --locked
+      - name: Build / Test hackatom wasm
+        run: |
+          cargo wasm --locked
+          cargo integration-test --no-default-features --features singlepass --locked
