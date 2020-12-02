@@ -26,6 +26,13 @@ jobs:
         shell: bash
         working-directory: ./contracts/hackatom
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ./contracts/hackatom/target
+          key: ${{ matrix.os }}-cargo-stable-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install rust
@@ -35,13 +42,6 @@ jobs:
           target: wasm32-unknown-unknown
           profile: minimal
           override: true
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            ./contracts/hackatom/target
-          key: ${{ matrix.os }}-cargo-stable-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Build hackatom wasm
         run: cargo wasm --locked
       - name: Check hackatom
@@ -63,6 +63,13 @@ jobs:
         shell: bash
         working-directory: ./contracts/hackatom
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ./contracts/hackatom/target
+          key: ${{ matrix.os }}-cargo-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install rust
@@ -72,13 +79,6 @@ jobs:
           target: wasm32-unknown-unknown
           profile: minimal
           override: true
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            ./contracts/hackatom/target
-          key: ${{ matrix.os }}-cargo-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Build hackatom wasm
         run: cargo wasm --locked
       - name: Integration Test hackatom
