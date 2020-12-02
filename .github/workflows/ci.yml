@@ -38,8 +38,8 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            ./contracts/hackatom/target
-          key: ${{ matrix.os }}-nightly-${{ hashFiles('**/Cargo.lock') }}
+            target
+          key: ${{ matrix.os }}-night-${{ hashFiles('**/Cargo.lock') }}
       - name: Build / Test hackatom wasm
         run: |
           cargo wasm --locked
