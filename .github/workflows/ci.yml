@@ -11,45 +11,6 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  test-hackatom:
-    name: Rust stable on ${{ matrix.build }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - build: macOS
-            os: macOS-latest
-          - build: Windows
-            os: windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./contracts/hackatom
-    steps:
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            ./contracts/hackatom/target
-          key: ${{ matrix.os }}-cargo-stable-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
-      - name: Checkout sources
-        uses: actions/checkout@v2
-      - name: Install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.47.0
-          target: wasm32-unknown-unknown
-          profile: minimal
-          override: true
-      - name: Build hackatom wasm
-        run: cargo wasm --locked
-      - name: Check hackatom
-        run: cargo check --locked --tests
-      - name: Unit Test hackatom
-        run: cargo unit-test --locked
-      - name: Integration Test hackatom
-        run: cargo integration-test --locked
   test-hackatom-in-singlepass-vm:
     name: Rust nightly on ${{ matrix.build }}
     runs-on: ${{ matrix.os }}
@@ -63,13 +24,6 @@ jobs:
         shell: bash
         working-directory: ./contracts/hackatom
     steps:
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            ./contracts/hackatom/target
-          key: ${{ matrix.os }}-cargo-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install rust
@@ -79,6 +33,11 @@ jobs:
           target: wasm32-unknown-unknown
           profile: minimal
           override: true
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ./contracts/hackatom/target
+          key: ${{ matrix.os }}-cargo-nightly-${{ hashFiles('./contracts/hackatom/Cargo.lock') }}
       - name: Build hackatom wasm
         run: cargo wasm --locked
       - name: Integration Test hackatom
